@@ -228,24 +228,4 @@ exports.deleteImages = async (req, res) => {
   }
 };
 
-exports.getLeaderboard = async (req, res) => {
-  try {
-    const { userType } = req.query;
 
-    const query = { isAdmin: false };
-    if (userType) {
-      query.userType = userType;
-    }
-
-    const leadUsers = await User.find(query).sort({ score: -1 }).limit(10);
-
-    return res
-      .status(200)
-      .json(ApiResponse(leadUsers, "Leaderboard fetched successfully", true));
-  } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .json(ApiResponse({}, "Internal Server Error", false));
-  }
-};
